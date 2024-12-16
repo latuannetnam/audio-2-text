@@ -25,13 +25,11 @@ def ensure_model_downloaded(model_name):
         sys.exit(1)
 
 
-def load_models():
+def load_models(whisper_model_name):
     """Load both Whisper and punctuation models"""
     try:
         # Load Whisper model and processor
-        print("Loading Whisper model and processor...")
-        # whisper_model_name = "vinai/PhoWhisper-small"
-        whisper_model_name = "vinai/PhoWhisper-medium"
+        print(f"Loading Whisper model and processor ({whisper_model_name})...")
         processor = WhisperProcessor.from_pretrained(whisper_model_name)
         whisper_model = WhisperForConditionalGeneration.from_pretrained(whisper_model_name)
         
@@ -139,6 +137,8 @@ def parse_arguments():
     parser.add_argument('-o', '--output', help='Path to the output text file (default: input_filename.txt)')
     parser.add_argument('-c', '--chunk-length', type=int, default=30,
                         help='Length of audio chunks in seconds (default: 30)')
+    parser.add_argument('-m', '--model', choices=['tiny', 'small', 'medium', 'large'], default='tiny',
+                        help='Whisper model size to use (default: tiny)')
     return parser.parse_args()
 
 def main():
@@ -158,9 +158,18 @@ def main():
     if args.output is None:
         args.output = os.path.splitext(args.input)[0] + '.txt'
     
+    # Map model size to model name
+    model_map = {
+        'tiny': 'vinai/PhoWhisper-tiny',
+        'small': 'vinai/PhoWhisper-small',
+        'medium': 'vinai/PhoWhisper-medium',
+        'large': 'vinai/PhoWhisper-large'
+    }
+    whisper_model_name = model_map[args.model]
+    
     # Load all models
     print("Loading models...")
-    model, punct_model, processor, device = load_models()
+    model, punct_model, processor, device = load_models(whisper_model_name)
     
     print(f"Processing audio file: {args.input}")
     # Process and transcribe the audio

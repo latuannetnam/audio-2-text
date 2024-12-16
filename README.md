@@ -105,11 +105,17 @@ Navigate to the PhoWhisper directory and install the required Python packages.
 cd PhoWhisper
 pip install -r requirements.txt
 ```
+### PhoWhisper command line arguments
 
-Run the PhoWhisper script to convert audio to text.
+The `phowhisper-audio-2-text.py` script accepts several command line arguments to customize its behavior. Here are the available options:
+
+- `-i`, `--input`: Specify the input audio file. This argument is required.
+- `-o`, `--output`: Specify the output text file. If not provided, the output will be printed to the console.
+- `-m`, `--model`: Specify the model to use. Default is `tiny`.
+Example usage:
 
 ```sh
-python phowhisper-audio-2-text.py -i audio.mp3
+python phowhisper-audio-2-text.py -i audio.mp3 -o transcript.txt -m large
 ```
 
 ## Trobleshoot
