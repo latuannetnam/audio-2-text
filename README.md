@@ -129,3 +129,4 @@ Run command to force install torch
 pip install --force-reinstall torch torchvision torchaudio
 ```
 
+Or re-run the script again
