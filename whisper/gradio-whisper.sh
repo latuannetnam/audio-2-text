@@ -1,0 +1,1 @@
+~/venv/bin/python whisper-gradio-audio-2-text.py
