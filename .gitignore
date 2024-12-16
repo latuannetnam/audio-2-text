@@ -37,3 +37,7 @@ build/
 
 # Other
 .lock
+
+# Ignore all .txt files except requirements.txt
+*.txt
+!requirements.txt
